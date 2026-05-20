@@ -1,34 +1,69 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using PersonalFinanceManager.Data;
+using PersonalFinanceManager.Models;
+using PersonalFinanceManager.Services;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<AppDbContext>(options =>
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+var services = new ServiceCollection();
+
+services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddSession();
-var app = builder.Build();
+        configuration.GetConnectionString("DefaultConnection")));
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+services.AddScoped<AuthService>();
+
+var serviceProvider = services.BuildServiceProvider();
+
+var authService =
+    serviceProvider.GetRequiredService<AuthService>();
+
+bool isRunning = true;
+
+while (isRunning)
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    Console.WriteLine("\n===== Personal Finance Manager =====");
+
+    Console.WriteLine("1. Register");
+    Console.WriteLine("2. Login");
+    Console.WriteLine("3. Exit");
+
+    Console.Write("\nSelect Option: ");
+
+    int choice = Convert.ToInt32(Console.ReadLine());
+
+    switch (choice)
+    {
+        case 1:
+
+            authService.Register();
+            break;
+
+        case 2:
+
+            User loggedInUser =
+                authService.Login();
+
+            if (loggedInUser != null)
+            {
+                Console.WriteLine("\nLogin Successful.");
+            }
+
+            break;
+
+        case 3:
+
+            isRunning = false;
+            break;
+
+        default:
+
+            Console.WriteLine("\nInvalid Choice.");
+            break;
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseRouting();
-app.UseSession();
-app.UseAuthorization();
-
-app.MapStaticAssets();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Auth}/{action=Login}/{id?}")
-    .WithStaticAssets();
-
-
-app.Run();
