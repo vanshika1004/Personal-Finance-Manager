@@ -1,7 +1,7 @@
 ﻿using PersonalFinanceManager.Enums;
 using PersonalFinanceManager.Models;
 
-namespace PersonalFinanceManager.Repositories
+namespace PersonalFinanceManager.Repositories.Interfaces
 {
     public interface ICategoryRepository
     {

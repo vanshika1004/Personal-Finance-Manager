@@ -1,4 +1,5 @@
-﻿using PersonalFinanceManager.Services;
+﻿using PersonalFinanceManager.Helpers;
+using PersonalFinanceManager.Services;
 
 namespace PersonalFinanceManager.Menus
 {
@@ -26,9 +27,7 @@ namespace PersonalFinanceManager.Menus
                 Console.WriteLine("3. Delete Category");
                 Console.WriteLine("4. Back");
 
-                Console.Write("\nSelect Option: ");
-
-                int choice = Convert.ToInt32(Console.ReadLine());
+                int choice = InputHelper.GetValidIntInput("\nSelect Option: ");
 
                 switch (choice)
                 {

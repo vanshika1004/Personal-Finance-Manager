@@ -1,4 +1,5 @@
-﻿using PersonalFinanceManager.Models;
+﻿using PersonalFinanceManager.Helpers;
+using PersonalFinanceManager.Models;
 using PersonalFinanceManager.Services;
 
 namespace PersonalFinanceManager.Menus
@@ -28,9 +29,8 @@ namespace PersonalFinanceManager.Menus
                 Console.WriteLine("3. Track Budget Usage");
                 Console.WriteLine("4. Delete Budget");
                 Console.WriteLine("5. Back");
-                Console.Write("\nSelect Option: ");
 
-                int choice = Convert.ToInt32(Console.ReadLine());
+                int choice = InputHelper.GetValidIntInput("\nSelect Option: ");
 
                 switch (choice)
                 {
@@ -61,10 +61,8 @@ namespace PersonalFinanceManager.Menus
 
                     default:
 
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nInvalid Choice.");
-                        Console.ResetColor();
-                        Console.ReadKey();
+                        ConsoleHelper.ShowError("\nInvalid Choice.");
+                        ConsoleHelper.Pause();
                         break;
                 }
             }

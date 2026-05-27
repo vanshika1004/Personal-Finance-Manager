@@ -41,8 +41,6 @@ namespace PersonalFinanceManager.Menus
                 Console.WriteLine("5. Summary Dashboard");
                 Console.WriteLine("6. Logout");
 
-                Console.Write("\nSelect Option: ");
-
                 int choice = InputHelper.GetValidIntInput("\nSelect Option: ");
 
                 switch (choice)

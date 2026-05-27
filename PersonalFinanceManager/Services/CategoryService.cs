@@ -1,7 +1,7 @@
 ﻿using PersonalFinanceManager.Enums;
 using PersonalFinanceManager.Helpers;
 using PersonalFinanceManager.Models;
-using PersonalFinanceManager.Repositories;
+using PersonalFinanceManager.Repositories.Interfaces;
 using PersonalFinanceManager.Validators;
 
 namespace PersonalFinanceManager.Services
